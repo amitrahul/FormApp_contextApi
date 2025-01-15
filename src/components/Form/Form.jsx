@@ -1,66 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import "./Form.css";
-import validatePassword from "../../helper/passwordValidator";
-import validateEmail from "../../helper/emailValidator";
+import { useContext } from "react";
 import Input from "../Input/Input";
+import "./Form.css";
+import { FormContext } from "../../Providers/FormContext";
 
 const Form = () => {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-
-  const [formValues, setFormValues] = useState({
-    email: "",
-    password: "",
-  });
-
-  useEffect(() => {
-    console.log(emailRef.current);
-  });
-
+  const { formInput, setFormInput } = useContext(FormContext);
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleValidatePassword();
-    handleValidateEmail();
-    console.log(formValues);
+    console.log(formInput);
   };
 
-  const handleValidateEmail = () => {
-    if (!validateEmail(formValues.email)) {
-      console.log("incorrect email");
-      emailRef.current.focus();
-    }
-  };
-
-  const handleValidatePassword = () => {
-    if (!validatePassword(formValues.password)) {
-      console.log("wrong password");
-      passwordRef.current.focus();
-    }
-  };
   return (
     <>
       <div>
         New Form
         <form onSubmit={handleFormSubmit}>
           <div className="wrapper email-input-wrapper">
-            <input
-              type="text"
-              value={formValues.email}
-              ref={emailRef}
-              onChange={(e) =>
-                setFormValues({ ...formValues, email: e.target.value })
-              }
-            />
+            <Input id="email-input" type="text" label="email" />
           </div>
           <div className="wrapper password-input-wrapper">
-            <input
-              type="password"
-              value={formValues.password}
-              ref={passwordRef}
-              onChange={(e) =>
-                setFormValues({ ...formValues, password: e.target.value })
-              }
-            />
+            <Input id="password-input" type="password" label="password" />
           </div>
 
           <input type="submit" value="submit" />

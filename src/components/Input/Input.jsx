@@ -1,6 +1,7 @@
-import { useState } from "react";
-
-function Input({ type, id }) {
+import { useContext, useState } from "react";
+import { FormContext } from "../../Providers/FormContext";
+function Input({ type, id, label }) {
+  const { formInput, setFormInput } = useContext(FormContext);
   const [text, setText] = useState("");
   return (
     <>
@@ -8,7 +9,10 @@ function Input({ type, id }) {
         type={type}
         id={id}
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          setText(e.target.value);
+          setFormInput({ ...formInput, [label]: e.target.value });
+        }}
       />
     </>
   );
