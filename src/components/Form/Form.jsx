@@ -13,10 +13,18 @@ const Form = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     // we have access to formInput value, so validation can occurs here.
+    handleInvalidEmail();
+    handleInvalidPassword();
+  };
+
+  const handleInvalidEmail = () => {
     if (!validateEmail(formInput.email)) {
       emailRef.current.setInvalid();
       emailRef.current.shaking();
     }
+  };
+
+  const handleInvalidPassword = () => {
     if (!validatePassword(formInput.password)) {
       passwordRef.current.setInvalid();
       passwordRef.current.shaking();
@@ -33,7 +41,13 @@ const Form = () => {
         */}
         <form onSubmit={handleFormSubmit} noValidate>
           <div className="wrapper email-input-wrapper">
-            <Input id="email-input" type="email" label="email" ref={emailRef} />
+            <Input
+              id="email-input"
+              type="email"
+              label="email"
+              ref={emailRef}
+              checkOnBlur={handleInvalidEmail}
+            />
           </div>
           <div className="wrapper password-input-wrapper">
             <Input
@@ -41,6 +55,7 @@ const Form = () => {
               type="password"
               label="password"
               ref={passwordRef}
+              checkOnBlur={handleInvalidPassword}
             />
           </div>
 

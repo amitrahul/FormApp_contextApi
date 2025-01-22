@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { FormContext } from "../../Providers/FormContext";
 import "./Input.css";
-function Input({ type, id, label }, ref) {
+function Input({ type, id, label, checkOnBlur }, ref) {
   const { formInput, setFormInput } = useContext(FormContext);
   const [text, setText] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -45,6 +45,7 @@ function Input({ type, id, label }, ref) {
           setText(e.target.value);
           setFormInput({ ...formInput, [label]: e.target.value });
         }}
+        onBlur={checkOnBlur}
       />
       <br />
       <span style={{ color: "grey" }}>{!isValid && `${label} is invalid`}</span>
